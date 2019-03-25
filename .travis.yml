@@ -55,4 +55,4 @@ script:
 after_success:
   - cd ..
   - 7z a -ttar ${ARTIFACT_NAME}.tar ./travis-${arch}
-  - 7a a -tgzip ${ARTIFACT_NAME}.tar.gz ${ARTIFACT_NAME}.tar
+  - 7z a -tgzip ${ARTIFACT_NAME}.tar.gz ${ARTIFACT_NAME}.tar
