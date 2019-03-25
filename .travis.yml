@@ -37,7 +37,7 @@ install:
   - cd ./taglib
 
   - export DIST="travis-${arch}"
-  - export ARTIFACT_NAME="${TRAVIS_BRANCH}-${$TRAVIS_OS_NAME}-${arch}-${linking}"
+  - export ARTIFACT_NAME="${TRAVIS_BRANCH}-${TRAVIS_OS_NAME}-${arch}-${linking}"
 
 script:
   # set variables related with compiler option for x86 architecture first
