@@ -1,0 +1,45 @@
+language: c
+
+# Travis CI build matrix.
+# Each entry below will trigger an extra, parallel build on Travis.
+matrix:
+  include:
+    - env: linking=static arch=x64
+      os: linux
+      dist: trusty
+
+    - env: linking=static arch=x86
+      os: linux
+      dist: trusty
+      addons:
+        apt:
+          packages:
+            - gcc-multilib
+            - g++-multilib
+
+    - env: linking=static arch=x64
+      os: osx
+      osx_image: xcode8
+
+install:
+  - git clone https://github.com/taglib/taglib taglib
+  - cd ./taglib
+
+  - export DIST="travis-${arch}"
+
+script:
+  # set variables related with compiler option for x86 architecture first
+  - if [[ "${arch}" == "x86" ]]; then
+      export CFLAGS=-m32;
+      export CXXFLAGS=-m32;
+      export PKG_CONFIG_PATH=/usr/lib/i386-linux-gnu/pkgconfig;
+    fi
+
+  # build it
+  - cmake -DCMAKE_INSTALL_PREFIX=../travis-${arch} -DBUILD_SHARED_LIBS=OFF -DENABLE_STATIC_RUNTIME=ON -DCMAKE_BUILD_TYPE=Release .
+  - make
+  - sudo make install
+
+after_success:
+  - cd ../travis-${arch}
+  - tree .
