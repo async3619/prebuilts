@@ -18,6 +18,7 @@ environment:
 
 init:
   - ps: $TIMESTAMP = [int][double]::Parse((Get-Date -UFormat %s))
+  - ps: $TAG_MESSAGE = "Automatically generated tag at " + (Get-Date -UFormat "%Y-%m-%d %H:%M:%S")
   - set "TAG_NAME=%APPVEYOR_REPO_BRANCH%-%TIMESTAMP%"
 
   - if "%$APPVEYOR_REPO_COMMIT_MESSAGE%"=="trigger publish" (
@@ -32,7 +33,7 @@ init:
   - if "%$APPVEYOR_REPO_COMMIT_MESSAGE%"=="trigger publish" (
       git config --global user.email "async3619@naver.com"
       git config --global user.name "Sophia"
-      git tag -a %TAG_NAME%
+      git tag -a %TAG_NAME% -m "%TAG_MESSAGE%"
       git push --tags
     )
 
