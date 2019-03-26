@@ -21,7 +21,6 @@ init:
 
 before_build:
   - git clone https://github.com/taglib/taglib taglib
-  - cd taglib
 
   - set "DIST=..\%APPVEYOR_REPO_BRANCH%-%PLATFORM%"
   - set "ARTIFACT_NAME=%APPVEYOR_REPO_BRANCH%-windows-%PLATFORM%-%LINKING%"
@@ -32,6 +31,8 @@ before_build:
   - if "%LINKING%"=="static" ( set "CMAKE_OPTIONS=%CMAKE_OPTIONS% -DBUILD_SHARED_LIBS=OFF -DENABLE_STATIC_RUNTIME=ON" )
 
 build_script:
+  - cd ./taglib
+
   - cmake -G "%GENERATOR%" %CMAKE_OPTIONS%
 
   - msbuild all_build.vcxproj /p:Configuration=%CONFIGURATION%
