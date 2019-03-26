@@ -1,0 +1,44 @@
+version: 1.0.{build}
+
+image: Visual Studio 2017
+
+configuration:
+  - Release
+
+platform:
+  - x64
+  - x86
+
+environment:
+  matrix:
+    - LINKING: static
+      
+init:
+  - if "%PLATFORM%"=="x64" ( set "arch= Win64" )
+  - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2017" ( set "GENERATOR=Visual Studio 15 2017%arch%" )
+  - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2015" ( set "GENERATOR=Visual Studio 14 2015%arch%" )
+  - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2013" ( set "GENERATOR=Visual Studio 12 2013%arch%" )
+
+before_build:
+  - git clone https://github.com/taglib/taglib taglib
+  - cd taglib
+
+  - set "DIST=..\%APPVEYOR_REPO_BRANCH%-%PLATFORM%"
+  - set "ARTIFACT_NAME=%APPVEYOR_REPO_BRANCH%-windows-%PLATFORM%-%LINKING%"
+
+  - set "CMAKE_OPTIONS=-G "%GENERATOR%""
+  - set "CMAKE_OPTIONS=%CMAKE_OPTIONS% -DCMAKE_INSTALL_PREFIX=%DIST%"
+  - set "CMAKE_OPTIONS=%CMAKE_OPTIONS% -DCMAKE_BUILD_TYPE=%CONFIGURATION%"
+  - if "%LINKING%"=="static" ( set "CMAKE_OPTIONS=%CMAKE_OPTIONS% -DBUILD_SHARED_LIBS=OFF -DENABLE_STATIC_RUNTIME=ON" )
+
+build_script:
+  - cmake -G "%GENERATOR%" %CMAKE_OPTIONS%
+
+  - msbuild all_build.vcxproj /p:Configuration=%CONFIGURATION%
+  - msbuild install.vcxproj
+
+on_success:
+  - cd ..
+
+  - 7z a -ttar %ARTIFACT_NAME%.tar ./%APPVEYOR_REPO_BRANCH%-%PLATFORM%
+  - 7z a -tgzip %ARTIFACT_NAME%.tar.gz %ARTIFACT_NAME%.tar
