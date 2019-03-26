@@ -36,14 +36,14 @@ install:
   - git clone https://github.com/taglib/taglib taglib
   - cd ./taglib
 
-  - export BRANCH_NAME="$(echo $TRAVIS_BRANCH | sed -E "s/-.*?$//")"
+  - export BRANCH_NAME="$(echo $TRAVIS_BRANCH | sed -E "s/-.*//")"
   - export DIST="../${BRANCH_NAME}-${arch}"
   - export ARTIFACT_NAME="${BRANCH_NAME}-${TRAVIS_OS_NAME}-${arch}-${linking}"
 
   - echo $TRAVIS_BRANCH
   - echo $DIST
   - echo $BRANCH_NAME
-  - echo $TRAVIS_BRANCH | sed -E "s/-.*?$//"
+  - echo $TRAVIS_BRANCH | sed -E "s/-.*//"
 
 script:
   # set variables related with compiler option for x86 architecture first
