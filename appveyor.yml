@@ -10,16 +10,37 @@ platform:
   - x86
 
 environment:
+  access_token:
+    secure: qBY+/0pT+5RoiwsHkr09q1jT2e0VCpDLAxleRTh+1iHCQXA1N9Z4ETvj+Eo7k2RS
+
   matrix:
     - LINKING: static
-      
+
 init:
+  - ps: $TIMESTAMP = [int][double]::Parse((Get-Date -UFormat %s))
+  - set "TAG_NAME=%APPVEYOR_REPO_BRANCH%-%TIMESTAMP%"
+
+  - if "%$APPVEYOR_REPO_COMMIT_MESSAGE%"=="trigger publish" (
+      git config --global credential.helper store
+    )
+
+  - ps: if ($APPVEYOR_REPO_COMMIT_MESSAGE -eq "trigger publish") {
+      Add-Content "$HOME\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
+    }
+
+  - if "%$APPVEYOR_REPO_COMMIT_MESSAGE%"=="trigger publish" (
+      git config --global user.email "async3619@naver.com"
+      git config --global user.name "Sophia"
+      git tag -a %TAG_NAME%
+      git push --tags
+    )
+
+before_build:
   - if "%PLATFORM%"=="x64" ( set "arch= Win64" )
   - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2017" ( set "GENERATOR=Visual Studio 15 2017%arch%" )
   - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2015" ( set "GENERATOR=Visual Studio 14 2015%arch%" )
   - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2013" ( set "GENERATOR=Visual Studio 12 2013%arch%" )
 
-before_build:
   - git clone https://github.com/taglib/taglib taglib
 
   - set "DIST=..\%APPVEYOR_REPO_BRANCH%-%PLATFORM%"
@@ -45,7 +66,7 @@ on_success:
   - 7z a -tgzip %ARTIFACT_NAME%.tar.gz %ARTIFACT_NAME%.tar
 
 artifacts:
-  - path: '**\*.tar.gz'
+  - path: '.\*.tar.gz'
 
 deploy:
   provider: GitHub
