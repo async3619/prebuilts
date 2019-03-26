@@ -37,7 +37,7 @@ install:
   - cd ./taglib
 
   - export BRANCH_NAME="$(echo $TRAVIS_BRANCH | sed -E "s/-.*?$//")"
-  - export DIST="../travis-${arch}"
+  - export DIST="../${BRANCH_NAME}-${arch}"
   - export ARTIFACT_NAME="${BRANCH_NAME}-${TRAVIS_OS_NAME}-${arch}-${linking}"
 
 script:
@@ -54,8 +54,7 @@ script:
   - sudo make install
 
 after_success:
-  - cd ..
-  - 7z a -ttar ${ARTIFACT_NAME}.tar ./travis-${arch}
+  - 7z a -ttar ${ARTIFACT_NAME}.tar ${DIST}
   - 7z a -tgzip ${ARTIFACT_NAME}.tar.gz ${ARTIFACT_NAME}.tar
 
 deploy:
