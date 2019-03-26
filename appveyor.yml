@@ -21,7 +21,7 @@ before_build:
   - ps: $env:COMMIT_ID = $env:APPVEYOR_REPO_COMMIT.substring(0, 8)
   - ps: $env:TAG_NAME = $env:APPVEYOR_REPO_BRANCH + "-" + $env:COMMIT_ID
   - ps: $env:HAS_TAG = (git tag -l "$env:TAG_NAME")
-  - ps: $env:NEED_TO_PUBLISH = $env:APPVEYOR_REPO_COMMIT_MESSAGE.Contains("[deploy]") -and ($env:APPVEYOR_REPO_TAG -eq "false") -and $env:HAS_TAG
+  - ps: $env:NEED_TO_PUBLISH = $env:APPVEYOR_REPO_COMMIT_MESSAGE.Contains("[deploy]") -and ($env:APPVEYOR_REPO_TAG -eq "false") -and !$env:HAS_TAG
 
   - ps: |
       if ($env:NEED_TO_PUBLISH) {
