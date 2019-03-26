@@ -37,6 +37,7 @@ before_build:
       git tag -a %TAG_NAME% -m "%TAG_MESSAGE%" &&
       git push --tags &&
       git add . &&
+      git checkout %BRANCH_NAME% &&
       git commit -m "update .latest_version [skip ci]" &&
       git push
     )
