@@ -17,20 +17,18 @@ environment:
     - LINKING: static
 
 init:
-  - ps: $TIMESTAMP = [int][double]::Parse((Get-Date -UFormat %s))
-  - ps: $TAG_MESSAGE = "Automatically generated tag at " + (Get-Date -UFormat "%Y-%m-%d %H:%M:%S")
+  - ps: $env:TIMESTAMP = [int][double]::Parse((Get-Date -UFormat %s))
+  - ps: $env:TAG_MESSAGE = "Automatically generated tag at " + (Get-Date -UFormat "%Y-%m-%d %H:%M:%S")
+  - ps: $env:NEED_TO_PUBLISH = $env:APPVEYOR_REPO_COMMIT_MESSAGE.Contains("[deploy]")
   - set "TAG_NAME=%APPVEYOR_REPO_BRANCH%-%TIMESTAMP%"
 
-  - if "%APPVEYOR_REPO_COMMIT_MESSAGE%"=="trigger publish" (
-      git config --global credential.helper store
-    )
-
   - ps: |
-      if ($APPVEYOR_REPO_COMMIT_MESSAGE -eq "trigger publish") {
+      if ($env:NEED_TO_PUBLISH) {
         Add-Content "$HOME\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
       }
 
-  - if "%APPVEYOR_REPO_COMMIT_MESSAGE%"=="trigger publish" (
+  - if "%NEED_TO_PUBLISH%"=="True" (
+      git config --global credential.helper store
       git config --global user.email "async3619@naver.com"
       git config --global user.name "Sophia"
       git tag -a %TAG_NAME% -m "%TAG_MESSAGE%"
