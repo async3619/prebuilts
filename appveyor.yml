@@ -24,9 +24,10 @@ init:
       git config --global credential.helper store
     )
 
-  - ps: if ($APPVEYOR_REPO_COMMIT_MESSAGE -eq "trigger publish") {
-      Add-Content "$HOME\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
-    }
+  - ps: |
+      if ($APPVEYOR_REPO_COMMIT_MESSAGE -eq "trigger publish") {
+        Add-Content "$HOME\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
+      }
 
   - if "%$APPVEYOR_REPO_COMMIT_MESSAGE%"=="trigger publish" (
       git config --global user.email "async3619@naver.com"
