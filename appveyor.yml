@@ -16,7 +16,7 @@ environment:
   matrix:
     - LINKING: static
 
-init:
+before_build:
   - ps: $env:TIMESTAMP = [int][double]::Parse((Get-Date -UFormat %s))
   - ps: $env:TAG_MESSAGE = "Automatically generated tag at " + (Get-Date -UFormat "%Y-%m-%d %H:%M:%S")
   - ps: $env:NEED_TO_PUBLISH = $env:APPVEYOR_REPO_COMMIT_MESSAGE.Contains("[deploy]")
@@ -35,7 +35,7 @@ init:
       git push --tags
     )
 
-before_build:
+build_script:
   - if "%PLATFORM%"=="x64" ( set "arch= Win64" )
   - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2017" ( set "GENERATOR=Visual Studio 15 2017%arch%" )
   - if "%APPVEYOR_BUILD_WORKER_IMAGE%"=="Visual Studio 2015" ( set "GENERATOR=Visual Studio 14 2015%arch%" )
@@ -51,7 +51,6 @@ before_build:
   - set "CMAKE_OPTIONS=%CMAKE_OPTIONS% -DCMAKE_BUILD_TYPE=%CONFIGURATION%"
   - if "%LINKING%"=="static" ( set "CMAKE_OPTIONS=%CMAKE_OPTIONS% -DBUILD_SHARED_LIBS=OFF -DENABLE_STATIC_RUNTIME=ON" )
 
-build_script:
   - cd ./taglib
 
   - cmake -G "%GENERATOR%" %CMAKE_OPTIONS% .
