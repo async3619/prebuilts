@@ -19,7 +19,7 @@ environment:
 before_build:
   - ps: $env:TAG_MESSAGE = "Automatically generated tag at " + (Get-Date -UFormat "%Y-%m-%d %H:%M:%S")
   - ps: $env:COMMIT_ID = $env:APPVEYOR_REPO_COMMIT.substring(0, 8)
-  - ps: $env:NEED_TO_PUBLISH = $env:APPVEYOR_REPO_COMMIT_MESSAGE.Contains("[deploy]")
+  - ps: $env:NEED_TO_PUBLISH = $env:APPVEYOR_REPO_COMMIT_MESSAGE.Contains("[deploy]") -and ($env:APPVEYOR_REPO_TAG -eq "false")
   - set "TAG_NAME=%APPVEYOR_REPO_BRANCH%-%COMMIT_ID%"
 
   - ps: |
