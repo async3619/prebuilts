@@ -21,7 +21,7 @@ init:
   - ps: $TAG_MESSAGE = "Automatically generated tag at " + (Get-Date -UFormat "%Y-%m-%d %H:%M:%S")
   - set "TAG_NAME=%APPVEYOR_REPO_BRANCH%-%TIMESTAMP%"
 
-  - if "%$APPVEYOR_REPO_COMMIT_MESSAGE%"=="trigger publish" (
+  - if "%APPVEYOR_REPO_COMMIT_MESSAGE%"=="trigger publish" (
       git config --global credential.helper store
     )
 
@@ -30,7 +30,7 @@ init:
         Add-Content "$HOME\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
       }
 
-  - if "%$APPVEYOR_REPO_COMMIT_MESSAGE%"=="trigger publish" (
+  - if "%APPVEYOR_REPO_COMMIT_MESSAGE%"=="trigger publish" (
       git config --global user.email "async3619@naver.com"
       git config --global user.name "Sophia"
       git tag -a %TAG_NAME% -m "%TAG_MESSAGE%"
