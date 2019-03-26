@@ -1,3 +1,3 @@
-# Prebuilt Binaries
+# Prebuilt Binaries for [TagLib](https://github.com/taglib/taglib)
 
-This repository provides prebuilt binaries for my several projects.
+This branch provides prebuilt binaries of [TagLib](https://github.com/taglib/taglib).
