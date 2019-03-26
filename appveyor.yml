@@ -33,7 +33,7 @@ before_build:
 build_script:
   - cd ./taglib
 
-  - cmake -G "%GENERATOR%" %CMAKE_OPTIONS%
+  - cmake -G "%GENERATOR%" %CMAKE_OPTIONS% .
 
   - msbuild all_build.vcxproj /p:Configuration=%CONFIGURATION%
   - msbuild install.vcxproj
