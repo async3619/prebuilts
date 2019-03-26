@@ -27,6 +27,7 @@ before_build:
   - ps: |
       if ($env:NEED_TO_PUBLISH) {
         Add-Content "$HOME\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
+        Set-Content ".\.latest_version" "$env:TAG_NAME"
       }
 
   - if "%NEED_TO_PUBLISH%"=="True" (
@@ -34,7 +35,10 @@ before_build:
       git config --global user.email "async3619@naver.com" &&
       git config --global user.name "Sophia" &&
       git tag -a %TAG_NAME% -m "%TAG_MESSAGE%" &&
-      git push --tags
+      git push --tags &&
+      git add . &&
+      git commit -m "update .latest_version [skip ci]" &&
+      git push
     )
 
 build_script:
