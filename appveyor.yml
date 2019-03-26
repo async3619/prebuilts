@@ -43,3 +43,15 @@ on_success:
 
   - 7z a -ttar %ARTIFACT_NAME%.tar ./%APPVEYOR_REPO_BRANCH%-%PLATFORM%
   - 7z a -tgzip %ARTIFACT_NAME%.tar.gz %ARTIFACT_NAME%.tar
+
+artifacts:
+  - path: '**\*.tar.gz'
+
+deploy:
+  provider: GitHub
+  auth_token:
+    secure: HXeiYWOUHuaIgFjAduz+0mtu+TFeliN7kCR/Z3kGAine00S1puQ4xcKUk8L1IJVs
+  artifact: /.*\.tar\.gz/
+  force_update: true
+  on:
+    appveyor_repo_tag: true        # deploy on tag push only
