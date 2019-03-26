@@ -40,11 +40,6 @@ install:
   - export DIST="../${BRANCH_NAME}-${arch}"
   - export ARTIFACT_NAME="${BRANCH_NAME}-${TRAVIS_OS_NAME}-${arch}-${linking}"
 
-  - echo $TRAVIS_BRANCH
-  - echo $DIST
-  - echo $BRANCH_NAME
-  - echo $TRAVIS_BRANCH | sed -E "s/-.*//"
-
 script:
   # set variables related with compiler option for x86 architecture first
   - if [[ "${arch}" == "x86" ]]; then
