@@ -17,10 +17,10 @@ environment:
     - LINKING: static
 
 before_build:
-  - ps: $env:TIMESTAMP = [int][double]::Parse((Get-Date -UFormat %s))
   - ps: $env:TAG_MESSAGE = "Automatically generated tag at " + (Get-Date -UFormat "%Y-%m-%d %H:%M:%S")
+  - ps: $env:COMMIT_ID = $env:APPVEYOR_REPO_COMMIT.substring(0, 8)
   - ps: $env:NEED_TO_PUBLISH = $env:APPVEYOR_REPO_COMMIT_MESSAGE.Contains("[deploy]")
-  - set "TAG_NAME=%APPVEYOR_REPO_BRANCH%-%TIMESTAMP%"
+  - set "TAG_NAME=%APPVEYOR_REPO_BRANCH%-%COMMIT_ID%"
 
   - ps: |
       if ($env:NEED_TO_PUBLISH) {
