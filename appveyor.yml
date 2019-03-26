@@ -59,7 +59,6 @@ build_script:
   - msbuild all_build.vcxproj /p:Configuration=%CONFIGURATION%
   - msbuild install.vcxproj
 
-on_success:
   - cd ..
 
   - 7z a -ttar %ARTIFACT_NAME%.tar ./%APPVEYOR_REPO_BRANCH%-%PLATFORM%
