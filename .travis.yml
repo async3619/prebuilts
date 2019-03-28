@@ -29,14 +29,21 @@ matrix:
       osx_image: xcode8
 
 before_install:
+  - if [[ "$TRAVIS_TAG" == "" ]] && [[ "$TRAVIS_COMMIT_MESSAGE" == *"[deploy]" ]]; then travis_terminate 0; fi
+
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install p7zip; fi
+
+  - if [[ "$TRAVIS_TAG" == "" ]]; then
+      export BRANCH_NAME="$TRAVIS_BRANCH";
+    else
+      export BRANCH_NAME=$(echo "$TRAVIS_BRANCH" | rev | cut -d"-" -f2- | rev);
+    fi
 
 install:
   - git clone https://github.com/taglib/taglib taglib
   - cd ./taglib
 
-  - export BRANCH_NAME="$(echo $TRAVIS_BRANCH | sed -E "s/-.*//")"
   - export DIST="../${BRANCH_NAME}-${arch}"
   - export ARTIFACT_NAME="${BRANCH_NAME}-${TRAVIS_OS_NAME}-${arch}-${linking}"
 
