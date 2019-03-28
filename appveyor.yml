@@ -56,7 +56,7 @@ build_script:
   - set "BOOST_DIST=./boost/%BRANCH_NAME%-%PLATFORM%"
   - set "ARTIFACT_NAME=%BRANCH_NAME%-windows-%PLATFORM%-static"
 
-  - copy ./meta.json %BOOST_DIST%
+  - copy .\meta.json %BOOST_DIST%
   - 7z a -ttar %ARTIFACT_NAME%.tar %BOOST_DIST%
   - 7z a -tgzip %ARTIFACT_NAME%.tar.gz %ARTIFACT_NAME%.tar
 
@@ -64,7 +64,7 @@ build_script:
   - set "BOOST_DIST=./boost/%BRANCH_NAME%-%PLATFORM%"
   - set "ARTIFACT_NAME=%BRANCH_NAME%-windows-%PLATFORM%-static"
 
-  - copy ./meta.json %BOOST_DIST%
+  - copy .\meta.json %BOOST_DIST%
   - 7z a -ttar %ARTIFACT_NAME%.tar %BOOST_DIST%
   - 7z a -tgzip %ARTIFACT_NAME%.tar.gz %ARTIFACT_NAME%.tar
 
