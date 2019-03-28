@@ -19,3 +19,5 @@ bash ./bootstrap.sh
 
 ./b2 -j${CPU_COUNTS} address-model=64 link=static variant=release debug-symbols=off optimization=speed threading=multi warnings=off stage
 ./b2 -d0 -j${CPU_COUNTS} --prefix=./boost-x64 address-model=64 link=static variant=release debug-symbols=off optimization=speed threading=multi warnings=off install
+
+cd ..
