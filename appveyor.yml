@@ -78,6 +78,7 @@ build_script:
 
   - cd ..
 
+  - copy ./meta.json ./%BRANCH_NAME%-%PLATFORM%
   - 7z a -ttar %ARTIFACT_NAME%.tar ./%BRANCH_NAME%-%PLATFORM%
   - 7z a -tgzip %ARTIFACT_NAME%.tar.gz %ARTIFACT_NAME%.tar
 
