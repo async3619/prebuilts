@@ -1,14 +1,18 @@
 #!/usr/bin/env bash
 
 export GIT_FETCH_JOBS=8
+if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+    export GIT_FETCH_DEPTH="--depth 1";
+fi
+
 
 git clone --depth 1 -b master https://github.com/boostorg/boost
 cd ./boost
 
 git submodule init tools/build tools/boostdep tools/boost_install libs/headers libs/config libs/filesystem
-git submodule update --jobs ${GIT_FETCH_JOBS} --depth 1
+git submodule update --jobs ${GIT_FETCH_JOBS} ${GIT_FETCH_DEPTH}
 
-python tools/boostdep/depinst/depinst.py --git_args "--jobs ${GIT_FETCH_JOBS} --depth 1" filesystem
+python tools/boostdep/depinst/depinst.py --git_args "--jobs ${GIT_FETCH_JOBS} ${GIT_FETCH_DEPTH}" filesystem
 
 bash ./bootstrap.sh
 
