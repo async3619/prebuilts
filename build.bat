@@ -61,10 +61,10 @@ powershell -c "Set-Content .boost_version (Get-ChildItem .\%BRANCH_NAME%-x86\inc
 set /p BOOST_VERSIONING= < .boost_version
 
 REM interpolate path
-powershell -c "Move-Item .\boost-x86\include\%BOOST_VERSIONING%\boost .\%BRANCH_NAME%-x86\include\boost"
-powershell -c "Remove-Item .\boost-x86\include\%BOOST_VERSIONING%"
+powershell -c "Move-Item .\%BRANCH_NAME%-x86\include\%BOOST_VERSIONING%\boost .\%BRANCH_NAME%-x86\include\boost"
+powershell -c "Remove-Item .\%BRANCH_NAME%-x86\include\%BOOST_VERSIONING%"
 
-powershell -c "Move-Item .\boost-x64\include\%BOOST_VERSIONING%\boost .\%BRANCH_NAME%-x86\include\boost"
-powershell -c "Remove-Item .\boost-x64\include\%BOOST_VERSIONING%"
+powershell -c "Move-Item .\%BRANCH_NAME%-x64\include\%BOOST_VERSIONING%\boost .\%BRANCH_NAME%-x86\include\boost"
+powershell -c "Remove-Item .\%BRANCH_NAME%-x64\include\%BOOST_VERSIONING%"
 
 cd ..
