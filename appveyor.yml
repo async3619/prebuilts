@@ -18,7 +18,13 @@ before_build:
   - ps: $env:TAG_NAME = $env:APPVEYOR_REPO_BRANCH + "-" + $env:COMMIT_ID
   - ps: $env:HAS_TAG = (git tag -l "$env:TAG_NAME")
   - ps: $env:NEED_TO_PUBLISH = $env:APPVEYOR_REPO_COMMIT_MESSAGE.Contains("[deploy]") -and ($env:APPVEYOR_REPO_TAG -eq "false") -and !$env:HAS_TAG
-  - ps: $env:BRANCH_NAME = (git rev-parse --abbrev-ref HEAD)
+  - ps: |
+      $env:BRANCH_NAME = if ($env:APPVEYOR_REPO_TAG_NAME) {
+        $tokens = $env:APPVEYOR_REPO_TAG_NAME.Split("-")
+        $tokens[0..($tokens.Length - 2)] -join "-"
+      } else {
+        $env:APPVEYOR_REPO_BRANCH
+      }
 
   - ps: |
       if ($env:NEED_TO_PUBLISH) {
