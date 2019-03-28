@@ -20,11 +20,11 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install p7zip; fi
 
-  - export BRANCH_NAME="$(echo $TRAVIS_BRANCH | sed -E "s/(.*)-/\1 /" | sed -E "s/(.*?) .*/\1/")"
+  - export BRANCH_NAME="$(git rev-parse --abbrev-ref HEAD)"
   - export CPU_COUNTS=$(nproc --all)
 
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export CPU_COUNTS=$(sysctl -n hw.physicalcpu); fi
-
+  - if [[ "$TRAVIS_TAG" == "" ]] && [[ "$TRAVIS_COMMIT_MESSAGE" == *"[deploy]" ]]; then travis_terminate 0; fi
 
 script:
   - bash ./build.sh
