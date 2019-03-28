@@ -1,0 +1,8 @@
+{
+    "libraryPath": [
+        "./boost-filesystem-{arch}/lib"
+    ],
+    "includePath": [
+        "./boost-filesystem-{arch}/include"
+    ]
+}
