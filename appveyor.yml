@@ -53,15 +53,19 @@ build_script:
   - cmd /c .\build.bat
 
   - set "PLATFORM=x64"
+  - set "BOOST_DIST=./boost/%BRANCH_NAME%-%PLATFORM%"
   - set "ARTIFACT_NAME=%BRANCH_NAME%-windows-%PLATFORM%-static"
 
-  - 7z a -ttar %ARTIFACT_NAME%.tar ./boost/%BRANCH_NAME%-%PLATFORM%
+  - copy ./meta.json %BOOST_DIST%
+  - 7z a -ttar %ARTIFACT_NAME%.tar %BOOST_DIST%
   - 7z a -tgzip %ARTIFACT_NAME%.tar.gz %ARTIFACT_NAME%.tar
 
   - set "PLATFORM=x86"
+  - set "BOOST_DIST=./boost/%BRANCH_NAME%-%PLATFORM%"
   - set "ARTIFACT_NAME=%BRANCH_NAME%-windows-%PLATFORM%-static"
 
-  - 7z a -ttar %ARTIFACT_NAME%.tar ./boost/%BRANCH_NAME%-%PLATFORM%
+  - copy ./meta.json %BOOST_DIST%
+  - 7z a -ttar %ARTIFACT_NAME%.tar %BOOST_DIST%
   - 7z a -tgzip %ARTIFACT_NAME%.tar.gz %ARTIFACT_NAME%.tar
 
   - ls
