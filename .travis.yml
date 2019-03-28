@@ -13,8 +13,7 @@ matrix:
             - p7zip-full
             - zlib1g-dev
 
-    - env: linking=static arch=x64
-      os: osx
+    - os: osx
       osx_image: xcode8
 
 before_install:
