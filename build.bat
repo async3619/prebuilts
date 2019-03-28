@@ -29,7 +29,7 @@ REM then install it into separated path
 .\b2.exe^
  -d0^
  -j4^
- --prefix=./boost-x86^
+ --prefix=./%BRANCH_NAME%-x86^
  toolset=msvc-14.0^
  address-model=32^
  link=static^
@@ -44,7 +44,7 @@ REM then install it into separated path
 .\b2.exe^
  -d0^
  -j4^
- --prefix=./boost-x64^
+ --prefix=./%BRANCH_NAME%-x64^
  toolset=msvc-14.0^
  address-model=64^
  link=static^

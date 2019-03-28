@@ -18,9 +18,9 @@ bash ./bootstrap.sh
 
 # build first
 ./b2 -j${CPU_COUNTS} address-model=32 link=static variant=release debug-symbols=off optimization=speed threading=multi warnings=off stage
-./b2 -d0 -j${CPU_COUNTS} --prefix=./boost-x86 address-model=32 link=static variant=release debug-symbols=off optimization=speed threading=multi warnings=off install
+./b2 -d0 -j${CPU_COUNTS} --prefix=./${BRANCH_NAME}-x86 address-model=32 link=static variant=release debug-symbols=off optimization=speed threading=multi warnings=off install
 
 ./b2 -j${CPU_COUNTS} address-model=64 link=static variant=release debug-symbols=off optimization=speed threading=multi warnings=off stage
-./b2 -d0 -j${CPU_COUNTS} --prefix=./boost-x64 address-model=64 link=static variant=release debug-symbols=off optimization=speed threading=multi warnings=off install
+./b2 -d0 -j${CPU_COUNTS} --prefix=./${BRANCH_NAME}-x64 address-model=64 link=static variant=release debug-symbols=off optimization=speed threading=multi warnings=off install
 
 cd ..

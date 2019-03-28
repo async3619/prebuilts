@@ -38,12 +38,12 @@ script:
 after_success:
   - export ARTIFACT_NAME="${BRANCH_NAME}-${TRAVIS_OS_NAME}-x86-static"
 
-  - 7z a -ttar ${ARTIFACT_NAME}.tar ./boost/boost-x86
+  - 7z a -ttar ${ARTIFACT_NAME}.tar ./boost/${BRANCH_NAME}-x86
   - 7z a -tgzip ${ARTIFACT_NAME}.tar.gz ${ARTIFACT_NAME}.tar
 
   - export ARTIFACT_NAME="${BRANCH_NAME}-${TRAVIS_OS_NAME}-x64-static"
 
-  - 7z a -ttar ${ARTIFACT_NAME}.tar ./boost/boost-x64
+  - 7z a -ttar ${ARTIFACT_NAME}.tar ./boost/${BRANCH_NAME}-x64
   - 7z a -tgzip ${ARTIFACT_NAME}.tar.gz ${ARTIFACT_NAME}.tar
 
 deploy:
