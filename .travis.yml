@@ -22,6 +22,10 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install p7zip; fi
 
   - export BRANCH_NAME="$(echo $TRAVIS_BRANCH | sed -E "s/(.*)-/\1 /" | sed -E "s/(.*?) .*/\1/")"
+  - export CPU_COUNTS=$(nproc --all)
+
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export CPU_COUNTS=$(sysctl -n hw.physicalcpu); fi
+
 
 script:
   - bash ./build.sh

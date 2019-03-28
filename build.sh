@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 export GIT_FETCH_JOBS=8
-export CPU_COUNTS=$(nproc --all)
 
 git clone --depth 1 -b master https://github.com/boostorg/boost
 cd ./boost
