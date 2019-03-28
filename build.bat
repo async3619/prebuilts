@@ -57,14 +57,14 @@ REM then install it into separated path
  install
 
 REM get boost versioning name to interpolate path
-powershell -c "Set-Content .boost_version (Get-ChildItem .\boost-x86\include\)[0].Name"
+powershell -c "Set-Content .boost_version (Get-ChildItem .\%BRANCH_NAME%-x86\include\)[0].Name"
 set /p BOOST_VERSIONING= < .boost_version
 
 REM interpolate path
-powershell -c "Move-Item .\boost-x86\include\%BOOST_VERSIONING%\boost .\boost-x86\include\boost"
+powershell -c "Move-Item .\boost-x86\include\%BOOST_VERSIONING%\boost .\%BRANCH_NAME%-x86\include\boost"
 powershell -c "Remove-Item .\boost-x86\include\%BOOST_VERSIONING%"
 
-powershell -c "Move-Item .\boost-x64\include\%BOOST_VERSIONING%\boost .\boost-x86\include\boost"
+powershell -c "Move-Item .\boost-x64\include\%BOOST_VERSIONING%\boost .\%BRANCH_NAME%-x86\include\boost"
 powershell -c "Remove-Item .\boost-x64\include\%BOOST_VERSIONING%"
 
 cd ..
