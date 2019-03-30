@@ -1,8 +1,8 @@
 {
     "libraryPath": [
-        ["OS=windows", "./taglib-{arch}/lib/tag.lib", "./taglib-{arch}/lib/tag.a"]
+        ["OS=windows", "./lib/tag.lib", "./lib/tag.a"]
     ],
     "includePath": [
-        "./taglib-{arch}/include"
+        "./include"
     ]
 }
