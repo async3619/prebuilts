@@ -64,7 +64,7 @@ REM interpolate path
 powershell -c "Move-Item .\%BRANCH_NAME%-x86\include\%BOOST_VERSIONING%\boost .\%BRANCH_NAME%-x86\include\boost"
 powershell -c "Remove-Item .\%BRANCH_NAME%-x86\include\%BOOST_VERSIONING%"
 
-powershell -c "Move-Item .\%BRANCH_NAME%-x64\include\%BOOST_VERSIONING%\boost .\%BRANCH_NAME%-x86\include\boost"
+powershell -c "Move-Item .\%BRANCH_NAME%-x64\include\%BOOST_VERSIONING%\boost .\%BRANCH_NAME%-x64\include\boost"
 powershell -c "Remove-Item .\%BRANCH_NAME%-x64\include\%BOOST_VERSIONING%"
 
 cd ..
