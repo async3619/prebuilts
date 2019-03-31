@@ -14,6 +14,7 @@ cmd /c .\bootstrap.bat
 
 REM build first
 .\b2.exe^
+ -a^
  toolset=msvc-14.0^
  address-model=32,64^
  link=static^
@@ -23,6 +24,7 @@ REM build first
  optimization=speed^
  threading=multi^
  warnings=off^
+ define=BOOST_TYPE_INDEX_FORCE_NO_RTTI_COMPATIBILITY^
  stage
 
 REM then install it into separated path
@@ -39,6 +41,7 @@ REM then install it into separated path
  optimization=speed^
  threading=multi^
  warnings=off^
+ define=BOOST_TYPE_INDEX_FORCE_NO_RTTI_COMPATIBILITY^
  install
 
 .\b2.exe^
@@ -54,6 +57,7 @@ REM then install it into separated path
  optimization=speed^
  threading=multi^
  warnings=off^
+ define=BOOST_TYPE_INDEX_FORCE_NO_RTTI_COMPATIBILITY^
  install
 
 REM get boost versioning name to interpolate path
