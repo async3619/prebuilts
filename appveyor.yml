@@ -79,6 +79,8 @@ build_script:
   - msbuild all_build.vcxproj /p:Configuration=%CONFIGURATION%
   - msbuild install.vcxproj
 
+  - if "%CONFIGURATION%"=="Debug" ( copy .\taglib\Debug\tag.pdb %DIST%\lib )
+
   - cd ..
 
   - copy .\meta.json .\%BRANCH_NAME%-%PLATFORM%
