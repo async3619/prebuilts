@@ -4,7 +4,7 @@ language: c
 # Each entry below will trigger an extra, parallel build on Travis.
 matrix:
   include:
-    - env: linking=static arch=x64
+    - env: linking=static arch=x64 configuration=Release
       os: linux
       dist: trusty
       addons:
@@ -13,7 +13,7 @@ matrix:
           packages:
             - p7zip-full
 
-    - env: linking=static arch=x86
+    - env: linking=static arch=x86 configuration=Release
       os: linux
       dist: trusty
       addons:
@@ -24,7 +24,31 @@ matrix:
             - g++-multilib
             - p7zip-full
 
-    - env: linking=static arch=x64
+    - env: linking=static arch=x64 configuration=Release
+      os: osx
+      osx_image: xcode8
+
+    - env: linking=static arch=x64 configuration=Debug
+      os: linux
+      dist: trusty
+      addons:
+        apt:
+          update: true
+          packages:
+            - p7zip-full
+
+    - env: linking=static arch=x86 configuration=Debug
+      os: linux
+      dist: trusty
+      addons:
+        apt:
+          update: true
+          packages:
+            - gcc-multilib
+            - g++-multilib
+            - p7zip-full
+
+    - env: linking=static arch=x64 configuration=Debug
       os: osx
       osx_image: xcode8
 
@@ -47,6 +71,10 @@ install:
   - export DIST="../${BRANCH_NAME}-${arch}"
   - export ARTIFACT_NAME="${BRANCH_NAME}-${TRAVIS_OS_NAME}-${arch}-${linking}"
 
+  - if [[ "$configuration" == "Debug" ]]; then
+      export ARTIFACT_NAME="${ARTIFACT_NAME}-debug";
+    fi
+
 script:
   # set variables related with compiler option for x86 architecture first
   - if [[ "${arch}" == "x86" ]]; then
@@ -56,7 +84,7 @@ script:
     fi
 
   # build it
-  - cmake -DCMAKE_INSTALL_PREFIX=${DIST} -DBUILD_SHARED_LIBS=OFF -DENABLE_STATIC_RUNTIME=ON -DCMAKE_BUILD_TYPE=Release .
+  - cmake -DCMAKE_INSTALL_PREFIX=${DIST} -DBUILD_SHARED_LIBS=OFF -DENABLE_STATIC_RUNTIME=ON -DCMAKE_BUILD_TYPE=${configuration} .
   - make
   - sudo make install
 

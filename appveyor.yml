@@ -4,6 +4,7 @@ image: Visual Studio 2017
 
 configuration:
   - Release
+  - Debug
 
 platform:
   - x64
@@ -63,6 +64,8 @@ build_script:
 
   - set "DIST=..\%BRANCH_NAME%-%PLATFORM%"
   - set "ARTIFACT_NAME=%BRANCH_NAME%-windows-%PLATFORM%-%LINKING%"
+
+  - if "%CONFIGURATION%"=="Debug" ( set "ARTIFACT_NAME=%ARTIFACT_NAME%-debug" )
 
   - set "CMAKE_OPTIONS=-G "%GENERATOR%""
   - set "CMAKE_OPTIONS=%CMAKE_OPTIONS% -DCMAKE_INSTALL_PREFIX=%DIST%"
