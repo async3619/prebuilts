@@ -54,7 +54,7 @@ script:
   - bash ./build.sh
 
 after_success:
-  - if [[ "$CONFIGURATION" == "Debug" ]]; export ARTIFACT_POSTFIX="-debug"; fi
+  - if [[ "$CONFIGURATION" == "Debug" ]]; then export ARTIFACT_POSTFIX="-debug"; fi
 
   - export ARTIFACT_NAME="${BRANCH_NAME}-${TRAVIS_OS_NAME}-x86-static${ARTIFACT_POSTFIX}"
   - export BOOST_DIST="./boost/${BRANCH_NAME}-x86"
