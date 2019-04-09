@@ -12,6 +12,12 @@ python tools/boostdep/depinst/depinst.py --git_args "--jobs %GIT_FETCH_JOBS% --d
 
 cmd /c .\bootstrap.bat
 
+IF "%CONFIGURATION%"=="Debug" (
+    set "BOOST_VARIANT=debug"
+) ELSE (
+    set "BOOST_VARIANT=release"
+)
+
 REM build first
 .\b2.exe^
  -a^
@@ -19,7 +25,7 @@ REM build first
  address-model=32,64^
  link=static^
  runtime-link=static^
- variant=release^
+ variant=%BOOST_VARIANT%^
  debug-symbols=off^
  optimization=speed^
  threading=multi^

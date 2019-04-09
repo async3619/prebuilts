@@ -4,6 +4,7 @@ image: Visual Studio 2017
 
 configuration:
   - Release
+  - Debug
 
 platform:
   - x64
@@ -51,10 +52,11 @@ before_build:
 
 build_script:
   - cmd /c .\build.bat
+  - if "%CONFIGURATION%"=="Debug" ( set "POSTFIX=-debug" )
 
   - set "PLATFORM=x64"
   - set "BOOST_DIST=.\boost\%BRANCH_NAME%-%PLATFORM%"
-  - set "ARTIFACT_NAME=%BRANCH_NAME%-windows-%PLATFORM%-static"
+  - set "ARTIFACT_NAME=%BRANCH_NAME%-windows-%PLATFORM%-static%POSTFIX%"
 
   - copy .\meta.json %BOOST_DIST%
   - 7z a -ttar %ARTIFACT_NAME%.tar %BOOST_DIST%
@@ -62,7 +64,7 @@ build_script:
 
   - set "PLATFORM=x86"
   - set "BOOST_DIST=.\boost\%BRANCH_NAME%-%PLATFORM%"
-  - set "ARTIFACT_NAME=%BRANCH_NAME%-windows-%PLATFORM%-static"
+  - set "ARTIFACT_NAME=%BRANCH_NAME%-windows-%PLATFORM%-static%POSTFIX%"
 
   - copy .\meta.json %BOOST_DIST%
   - 7z a -ttar %ARTIFACT_NAME%.tar %BOOST_DIST%

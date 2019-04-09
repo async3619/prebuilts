@@ -1,5 +1,10 @@
 language: c
 
+env:
+  matrix:
+    - BOOST_VARIANT=debug
+    - BOOST_VARIANT=release
+
 matrix:
   include:
     - os: linux
@@ -36,14 +41,16 @@ script:
   - bash ./build.sh
 
 after_success:
-  - export ARTIFACT_NAME="${BRANCH_NAME}-${TRAVIS_OS_NAME}-x86-static"
+  - if [[ "$BOOST_VARIANT" == "debug" ]]; export ARTIFACT_POSTFIX="-debug"; fi
+
+  - export ARTIFACT_NAME="${BRANCH_NAME}-${TRAVIS_OS_NAME}-x86-static${ARTIFACT_POSTFIX}"
   - export BOOST_DIST="./boost/${BRANCH_NAME}-x86"
 
   - cp ./meta.json ${BOOST_DIST}
   - 7z a -ttar ${ARTIFACT_NAME}.tar ${BOOST_DIST}
   - 7z a -tgzip ${ARTIFACT_NAME}.tar.gz ${ARTIFACT_NAME}.tar
 
-  - export ARTIFACT_NAME="${BRANCH_NAME}-${TRAVIS_OS_NAME}-x64-static"
+  - export ARTIFACT_NAME="${BRANCH_NAME}-${TRAVIS_OS_NAME}-x64-static${ARTIFACT_POSTFIX}"
   - export BOOST_DIST="./boost/${BRANCH_NAME}-x64"
 
   - cp ./meta.json ${BOOST_DIST}

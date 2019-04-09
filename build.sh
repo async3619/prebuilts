@@ -17,10 +17,10 @@ python tools/boostdep/depinst/depinst.py --git_args "--jobs ${GIT_FETCH_JOBS} ${
 bash ./bootstrap.sh
 
 # build first
-./b2 -j${CPU_COUNTS} address-model=32 link=static variant=release debug-symbols=off optimization=speed threading=multi warnings=off define=BOOST_TYPE_INDEX_FORCE_NO_RTTI_COMPATIBILITY stage
-./b2 -d0 -j${CPU_COUNTS} --prefix=./${BRANCH_NAME}-x86 address-model=32 link=static variant=release debug-symbols=off optimization=speed threading=multi warnings=off define=BOOST_TYPE_INDEX_FORCE_NO_RTTI_COMPATIBILITY install
+./b2 -j${CPU_COUNTS} address-model=32 link=static variant=${BOOST_VARIANT} debug-symbols=off optimization=speed threading=multi warnings=off define=BOOST_TYPE_INDEX_FORCE_NO_RTTI_COMPATIBILITY stage
+./b2 -d0 -j${CPU_COUNTS} --prefix=./${BRANCH_NAME}-x86 address-model=32 link=static variant=${BOOST_VARIANT} debug-symbols=off optimization=speed threading=multi warnings=off define=BOOST_TYPE_INDEX_FORCE_NO_RTTI_COMPATIBILITY install
 
-./b2 -j${CPU_COUNTS} address-model=64 link=static variant=release debug-symbols=off optimization=speed threading=multi warnings=off define=BOOST_TYPE_INDEX_FORCE_NO_RTTI_COMPATIBILITY stage
-./b2 -d0 -j${CPU_COUNTS} --prefix=./${BRANCH_NAME}-x64 address-model=64 link=static variant=release debug-symbols=off optimization=speed threading=multi warnings=off define=BOOST_TYPE_INDEX_FORCE_NO_RTTI_COMPATIBILITY install
+./b2 -j${CPU_COUNTS} address-model=64 link=static variant=${BOOST_VARIANT} debug-symbols=off optimization=speed threading=multi warnings=off define=BOOST_TYPE_INDEX_FORCE_NO_RTTI_COMPATIBILITY stage
+./b2 -d0 -j${CPU_COUNTS} --prefix=./${BRANCH_NAME}-x64 address-model=64 link=static variant=${BOOST_VARIANT} debug-symbols=off optimization=speed threading=multi warnings=off define=BOOST_TYPE_INDEX_FORCE_NO_RTTI_COMPATIBILITY install
 
 cd ..
