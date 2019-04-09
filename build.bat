@@ -12,7 +12,7 @@ python tools/boostdep/depinst/depinst.py --git_args "--jobs %GIT_FETCH_JOBS%" fi
 
 cmd /c .\bootstrap.bat
 
-set "BUILD_OPTION= toolset=msvc-15.0 link=static runtime-link=static threading=multi warnings=off"
+set "BUILD_OPTION= toolset=msvc-14.1 link=static runtime-link=static threading=multi warnings=off"
 set "BUILD_OPTION= %BUILD_OPTION% define=BOOST_TYPE_INDEX_FORCE_NO_RTTI_COMPATIBILITY"
 
 IF "%CONFIGURATION%"=="Debug" (
