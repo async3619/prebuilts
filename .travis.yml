@@ -89,8 +89,7 @@ script:
   - sudo make install
 
 after_success:
-  - cd ..
-  - cp ./meta.json ${DIST}
+  - cp ../meta.json ${DIST}
   - 7z a -ttar ${ARTIFACT_NAME}.tar ${DIST}
   - 7z a -tgzip ${ARTIFACT_NAME}.tar.gz ${ARTIFACT_NAME}.tar
 
