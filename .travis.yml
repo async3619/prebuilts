@@ -86,7 +86,7 @@ script:
   # build it
   - cmake -DCMAKE_INSTALL_PREFIX=${DIST} -DBUILD_SHARED_LIBS=OFF -DENABLE_STATIC_RUNTIME=ON -DCMAKE_BUILD_TYPE=${configuration} .
   - make
-  - sudo make install
+  - make install
 
 after_success:
   - cp ../meta.json ${DIST}
