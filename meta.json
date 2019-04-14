@@ -1,6 +1,6 @@
 {
     "libraryPath": [
-        ["OS=windows", "./lib/tag.lib", "./lib/tag.a"]
+        ["OS=windows", "./lib/tag.lib", "./lib/libtag.a"]
     ],
     "includePath": [
         "./include"
